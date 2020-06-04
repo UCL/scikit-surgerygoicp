@@ -1,6 +1,6 @@
 /********************************************************************
-Implementation of Go-ICP Algorithm
-Last modified: Jun 18, 2014
+Header File for Go-ICP Class
+Last modified: Apr 21, 2014
 
 "Go-ICP: Solving 3D Registration Efficiently and Globally Optimally"
 Jiaolong Yang, Hongdong Li, Yunde Jia
@@ -21,20 +21,180 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
-
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-#include <stdio.h>
-//using namespace std;
-
-#include "jly_goicp.h"
+#pragma once
+#include <iostream>
+#include <vector>
+#include <queue>
+#include "jly_icp3d.hpp"
+#include "jly_3ddt.hpp"
 #include "jly_sorting.hpp"
 
-POINT3D::POINT3D(float _x, float _y, float _z) {
-	x = _x;
-	y = _y;
-	z = _z;
+using namespace std;
+
+#define PI 3.1415926536
+#define SQRT3 1.732050808
+#define MAXROTLEVEL 20
+
+struct POINT3D
+{
+	float x = 0.0, y = 0.0, z = 0.0;
+	POINT3D(){}
+	POINT3D(float xx, float yy, float zz){
+				x = xx;
+				y = yy;
+				z = zz;
+			}
+	void pointToString()
+	{
+		std::cout << "("<< x << ", "<< y << ", "<< z << ")"<<std::endl;
+	};
+};
+
+struct ROTNODE
+{
+	float a = 0.0, b = 0.0, c = 0.0, w = 0.0;
+	float ub = 0.0, lb = 0.0;
+	int l = 0;
+	ROTNODE(){}
+	friend bool operator < (const struct ROTNODE & n1, const struct ROTNODE & n2)
+	{
+		if(n1.lb != n2.lb)
+			return n1.lb > n2.lb;
+		else
+			return n1.w < n2.w;
+			//return n1.ub > n2.ub;
+	}
+	
+};
+
+struct TRANSNODE
+{
+	float x = 0.0, y = 0.0, z = 0.0, w = 0.0;
+	float ub = 0.0, lb = 0.0;
+	TRANSNODE(){}
+	friend bool operator < (const struct TRANSNODE & n1, const struct TRANSNODE & n2)
+	{
+		if(n1.lb != n2.lb)
+			return n1.lb > n2.lb;
+		else
+			return n1.w < n2.w;
+			//return n1.ub > n2.ub;
+	}
+};
+
+/********************************************************/
+
+
+
+/********************************************************/
+
+class GoICP
+{
+public:
+	int Nm, Nd;
+
+	POINT3D *pModel, *pData;
+	ROTNODE initNodeRot;
+	TRANSNODE initNodeTrans;
+	ROTNODE optNodeRot;
+	TRANSNODE optNodeTrans;
+
+	DT3D dt;
+
+	GoICP();
+	float Register();
+	void BuildDT();
+
+	void loadModelAndData(int  m, std::vector<POINT3D> m_points, int  n, std::vector<POINT3D> n_points);
+	void loadPointCloud(int&  N, POINT3D **p, std::vector<POINT3D> points);
+	void setInitNodeRot(ROTNODE &node);
+	void setInitNodeTrans(TRANSNODE &node);
+	void setDTSizeAndFactor(int size, double factor);
+	std::vector<std::vector<double>> optimalRotation();
+	std::vector<double> optimalTranslation();
+
+
+	float MSEThresh;
+	float SSEThresh;
+	float icpThresh;
+
+	float optError;
+	Matrix optR;
+	Matrix optT;
+
+	clock_t clockBegin;
+
+	float trimFraction;
+	int inlierNum;
+	bool doTrim;
+
+private:
+	//temp variables
+	float * normData;
+	float * minDis;
+	float** maxRotDis;
+	float * maxRotDisL;
+	POINT3D * pDataTemp;
+	POINT3D * pDataTempICP;
+	
+	ICP3D<float> icp3d;
+	float * M_icp;
+	float * D_icp;
+
+	float ICP(Matrix& R_icp, Matrix& t_icp);
+	float InnerBnB(float* maxRotDisL, TRANSNODE* nodeTransOut);
+	float OuterBnB();
+	void Initialize();
+	void Clear();
+
+};
+
+/********************************************************/
+void GoICP::setInitNodeRot(ROTNODE &node)
+{
+	initNodeRot.a = node.a;
+	initNodeRot.b = node.b;
+	initNodeRot.c = node.c;
+	initNodeRot.w = node.w;
+	initNodeRot.l = node.l;
+	initNodeRot.lb = node.lb;
+	initNodeRot.ub = node.ub;
+}
+
+void GoICP::setInitNodeTrans(TRANSNODE &node)
+{
+	initNodeTrans.x = node.x;
+	initNodeTrans.y = node.y;
+	initNodeTrans.z = node.z;
+	initNodeTrans.w = node.w;
+	initNodeTrans.ub = node.ub;
+	initNodeTrans.lb = node.lb;
+}
+
+void GoICP::setDTSizeAndFactor(int size, double factor)
+{
+	dt.SIZE = size;
+	dt.expandFactor = factor;
+}
+
+void GoICP::loadModelAndData(int m, std::vector<POINT3D> m_points, int n, std::vector<POINT3D> n_points)
+{
+	Nm = m;
+	Nd = n;
+	loadPointCloud(m, &pModel, m_points);
+	loadPointCloud(n, &pData, n_points);
+}
+
+void GoICP::loadPointCloud(int& N, POINT3D ** p, std::vector<POINT3D> points)
+{
+	int i;
+	*p = (POINT3D *)malloc(sizeof(POINT3D) * N);
+	for(i = 0; i < N; i++)
+	{
+		(*p)[i].x = points.at(i).x;
+		(*p)[i].y = points.at(i).y;
+		(*p)[i].z = points.at(i).z;
+	}
 }
 
 GoICP::GoICP()
@@ -44,11 +204,58 @@ GoICP::GoICP()
 	initNodeRot.c = -PI;
 	initNodeRot.w = 2*PI;
 	initNodeRot.l = 0;
-
 	initNodeRot.lb = 0;
 	initNodeTrans.lb = 0;
-
+	MSEThresh = 0.001;
+	trimFraction = 0.0;
 	doTrim = true;
+	dt.SIZE = 1;
+	dt.expandFactor = 2.0;
+}
+
+std::vector<std::vector<double>> GoICP::optimalRotation()
+{
+	std::vector<std::vector<double>> optrot;
+
+	if (optR.m==0 || optR.n==0)
+	{
+	    return optrot;
+	}
+	else
+	{
+	    for (int i=0; i<optR.m; i++)
+	    {
+	      std::vector<double> inner;
+	      for (int j=0; j<optR.n; j++)
+	      {
+	    	  inner.push_back(optR.val[i][j]);
+	      }
+	      optrot.push_back(inner);
+	    }
+	 }
+
+	return optrot;
+}
+
+std::vector<double> GoICP::optimalTranslation()
+{
+	std::vector<double> opttrans;
+
+	if (optT.m==0 || optT.n==0)
+	{
+	    return opttrans;
+	}
+	else
+	{
+	    for (int i=0; i<optT.m; i++)
+	    {
+	      for (int j=0; j<optT.n; j++)
+	      {
+	    	  opttrans.push_back(optT.val[i][j]);
+	      }
+	    }
+	 }
+	return opttrans;
 }
 
 // Build Distance Transform
@@ -57,12 +264,14 @@ void GoICP::BuildDT()
 	double* x = (double*)malloc(sizeof(double)*Nm);
 	double* y = (double*)malloc(sizeof(double)*Nm);
 	double* z = (double*)malloc(sizeof(double)*Nm);
+
 	for(int i = 0; i < Nm; i++)
 	{
 		x[i] = pModel[i].x;
 		y[i] = pModel[i].y;
 		z[i] = pModel[i].z;
 	}
+
 	dt.Build(x, y, z, Nm);
 	delete(x);
 	delete(y);
@@ -200,6 +409,10 @@ void GoICP::Clear()
 	delete(maxRotDis);
 	delete(M_icp);
 	delete(D_icp);
+
+	//To handle the segmentation faults delete pModel and pData as well by #0K
+//	delete(pModel);
+//	delete(pData);
 }
 
 // Inner Branch-and-Bound, iterating over the translation space
@@ -245,7 +458,7 @@ float GoICP::InnerBnB(float* maxRotDisL, TRANSNODE* nodeTransOut)
 			transX = nodeTrans.x + nodeTrans.w/2;
 			transY = nodeTrans.y + nodeTrans.w/2;
 			transZ = nodeTrans.z + nodeTrans.w/2;
-			
+
 			// For each data point, calculate the distance to it's closest point in the model cloud
 			for(i = 0; i < Nd; i++)
 			{
@@ -287,7 +500,7 @@ float GoICP::InnerBnB(float* maxRotDisL, TRANSNODE* nodeTransOut)
 				if(dis > 0)
 					lb += dis*dis;
 			}
-			
+
 
 			// If upper bound is better than best, update optErrorT and optTransOut (optimal translation node)
 			if(ub < optErrorT)
@@ -392,7 +605,7 @@ float GoICP::OuterBnB()
 		if(count>0 && count%300 == 0)
 			printf("LB=%f  L=%d\n",nodeRotParent.lb,nodeRotParent.l);
 		count ++;
-		
+
 		// Subdivide rotation cube into octant subcubes and calculate upper and lower bounds for each
 		nodeRot.w = nodeRotParent.w/2;
 		nodeRot.l = nodeRotParent.l+1;
@@ -479,14 +692,14 @@ float GoICP::OuterBnB()
 				R_icp = optR;
 				t_icp = optT;
 				error = ICP(R_icp, t_icp);
-				//Our ICP implementation uses kdtree for closest distance computation which is slightly different from DT approximation, 
+				//Our ICP implementation uses kdtree for closest distance computation which is slightly different from DT approximation,
 				//thus it's possible that ICP failed to decrease the DT error. This is no big deal as the difference should be very small.
 				if(error < optError)
 				{
 					optError = error;
 					optR = R_icp;
 					optT = t_icp;
-					
+
 					cout << "Error*: " << error << "(ICP " << (double)(clock() - clockBeginICP)/CLOCKS_PER_SEC << "s)" << endl;
 				}
 
@@ -529,9 +742,15 @@ float GoICP::OuterBnB()
 
 float GoICP::Register()
 {
+	std::cout << "INITIALIZE THE GOICP SYSTEM :: " << std::endl;
 	Initialize();
+	std::cout << "FINDING OUTERBNB :: " << std::endl;
 	OuterBnB();
+	std::cout << "CLEARING THE GOICP SYSTEM :: " << std::endl;
 	Clear();
 
 	return optError;
 }
+
+
+

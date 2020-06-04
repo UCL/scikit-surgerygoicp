@@ -21,12 +21,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
-
-#ifndef JLY_SORING_HPP
-#define JLY_SORING_HPP
+#pragma once
 
 #define INTRO_K 5
-
 #define INSERTION_NUM 5
 
 //sorting in ascending order
@@ -311,5 +308,3 @@ void intro_select(T * data, size_t st, size_t en, size_t k)
 			break;
 	}
 }
-
-#endif

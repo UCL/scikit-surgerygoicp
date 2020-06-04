@@ -13,7 +13,9 @@
 =============================================================================*/
 
 #include <pybind11/pybind11.h>
-#include "jly_goicp.h"
+#include <pybind11/stl.h>
+
+#include "jly_goicp.hpp"
 
 namespace py = pybind11;
 
@@ -58,6 +60,14 @@ PYBIND11_MODULE(sksurgerygoicppython, m) {
         .def(py::init())
         .def("BuildDT", &GoICP::BuildDT)
         .def("Register", &GoICP::Register)
+        .def("loadModelAndData", &GoICP::loadModelAndData)
+        .def("setInitNodeRot", &GoICP::setInitNodeRot)
+        .def("setInitNodeTrans", &GoICP::setInitNodeTrans)
+        .def("optimalTranslation", &GoICP::optimalTranslation)
+        .def("optimalRotation", &GoICP::optimalRotation)
+        .def("setDTSizeAndFactor", &GoICP::setDTSizeAndFactor)
+        .def("setInitNodeRot", &GoICP::setInitNodeRot)
+        .def("setInitNodeTrans", &GoICP::setInitNodeTrans)
         .def_readwrite("Nm", &GoICP::Nm)
         .def_readwrite("MSEThresh", &GoICP::MSEThresh)
         .def_readwrite("SSEThresh", &GoICP::SSEThresh)

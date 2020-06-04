@@ -21,11 +21,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *********************************************************************/
+#pragma once
 
-#ifndef JLY_ICP3D_HPP
-#define JLY_ICP3D_HPP
-
-#include "matrix.h"
+#include "matrix.hpp"
 #include "nanoflann.hpp"
 using namespace nanoflann;
 
@@ -293,6 +291,3 @@ T ICP3D<T>::Run(T * data, size_t n, Matrix & R, Matrix & t, size_t max_iter, T e
 
 	return err_new;
 }
-
-
-#endif

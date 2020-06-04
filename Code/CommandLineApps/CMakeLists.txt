@@ -13,7 +13,6 @@
 #============================================================================*/
 
 set(_command_line_apps
-  jly_main
 )
 
 foreach(_app ${_command_line_apps})
