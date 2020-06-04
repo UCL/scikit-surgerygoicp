@@ -41,12 +41,12 @@ struct POINT3D
 
 };
 
-typedef struct _ROTNODE
+struct ROTNODE
 {
 	float a, b, c, w;
 	float ub, lb;
 	int l;
-	friend bool operator < (const struct _ROTNODE & n1, const struct _ROTNODE & n2)
+	friend bool operator < (const struct ROTNODE & n1, const struct ROTNODE & n2)
 	{
 		if(n1.lb != n2.lb)
 			return n1.lb > n2.lb;
@@ -55,13 +55,13 @@ typedef struct _ROTNODE
 			//return n1.ub > n2.ub;
 	}
 	
-}ROTNODE;
+};
 
-typedef struct _TRANSNODE
+struct TRANSNODE
 {
 	float x, y, z, w;
 	float ub, lb;
-	friend bool operator < (const struct _TRANSNODE & n1, const struct _TRANSNODE & n2)
+	friend bool operator < (const struct TRANSNODE & n1, const struct TRANSNODE & n2)
 	{
 		if(n1.lb != n2.lb)
 			return n1.lb > n2.lb;
@@ -69,7 +69,7 @@ typedef struct _TRANSNODE
 			return n1.w < n2.w;
 			//return n1.ub > n2.ub;
 	}
-}TRANSNODE;
+};
 
 /********************************************************/
 
