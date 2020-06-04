@@ -252,7 +252,7 @@ WARN_FORMAT           = "$file:$line: $text"
 
 # The INPUT tag can be used to specify the files and/or directories that
 # contain documented source files. You may enter file names like "myfile.cpp"
-# or directories like "/usr/src/sksurgerygoicp". Separate the files or directories
+# or directories like "/usr/src/sksurgerygoicppython". Separate the files or directories
 # with spaces.
 
 INPUT    = @CMAKE_SOURCE_DIR@/Documentation @CMAKE_SOURCE_DIR@/Code @CMAKE_BINARY_DIR@/Doxygen
@@ -544,7 +544,7 @@ TAGFILES              = @SKSURGERYGOICP_TAGFILES@
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create
 # a tag file that is based on the input files it reads.
 
-GENERATE_TAGFILE      = Doxygen/sksurgerygoicp.tag
+GENERATE_TAGFILE      = Doxygen/sksurgerygoicppython.tag
 
 # If the ALLEXTERNALS tag is set to YES all external classes will be listed
 # in the class index. If set to NO only the inherited external classes

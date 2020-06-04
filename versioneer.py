@@ -52,7 +52,7 @@ this tool is format-agnostic) can come from a variety of places:
 
 For released software, the version identifier is closely related to a VCS
 tag. Some projects use tag names that include more than just the version
-string (e.g. "sksurgerygoicp-1.2" instead of just "1.2"), in which case the tool
+string (e.g. "sksurgerygoicppython-1.2" instead of just "1.2"), in which case the tool
 needs to strip the tag prefix to extract the version identifier. For
 unreleased software (between tags), the version identifier should provide
 enough information to help developers recreate the same tree, while also
@@ -65,7 +65,7 @@ uncommitted changes.
 
 The version identifier is used for multiple purposes:
 
-* to allow the module to self-identify its version: `sksurgerygoicp.__version__`
+* to allow the module to self-identify its version: `sksurgerygoicppython.__version__`
 * to choose a name and prefix for a 'setup.py sdist' tarball
 
 ## Theory of Operation
@@ -1657,10 +1657,10 @@ a section like:
  [versioneer]
  VCS = git
  style = pep440
- versionfile_source = src/sksurgerygoicp/_version.py
- versionfile_build = sksurgerygoicp/_version.py
+ versionfile_source = src/sksurgerygoicppython/_version.py
+ versionfile_build = sksurgerygoicppython/_version.py
  tag_prefix =
- parentdir_prefix = sksurgerygoicp-
+ parentdir_prefix = sksurgerygoicppython-
 
 You will also need to edit your setup.py to use the results:
 
