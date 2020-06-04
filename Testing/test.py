@@ -73,7 +73,7 @@ def test_goicp():
 
     expected_transform = np.loadtxt('./Testing/Data/expected_transform.txt')
 
-    np.testing.assert_allclose(expected_transform, transform)
+    np.testing.assert_allclose(expected_transform, transform, atol =1e-9, rtol=1e25)
     # print(optR);
     # print(optT);
     # print(transform);
