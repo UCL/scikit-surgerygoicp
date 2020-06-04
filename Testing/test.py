@@ -22,7 +22,7 @@ def test_goicp():
     rNode.c = -3.1416;
     rNode.w = 6.2832;
     
-    tNode.x = -0.5;
+    tNode.x = -0.5; 
     tNode.y = -0.5;
     tNode.z = -0.5;
     tNode.w = 1.0;
