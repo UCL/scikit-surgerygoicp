@@ -53,4 +53,21 @@ PYBIND11_MODULE(sksurgerygoicppython, m) {
         .def_readwrite("ub", &TRANSNODE::ub)
         .def_readwrite("lb", &TRANSNODE::lb)
         ;
+
+    py::class_<GoICP>(m, "GoICP")
+        .def(py::init())
+        .def("BuildDT", &GoICP::BuildDT)
+        .def("Register", &GoICP::Register)
+        .def_readwrite("Nm", &GoICP::Nm)
+        .def_readwrite("MSEThresh", &GoICP::MSEThresh)
+        .def_readwrite("SSEThresh", &GoICP::SSEThresh)
+        .def_readwrite("icpThresh", &GoICP::icpThresh)
+        .def_readwrite("optError", &GoICP::optError)
+        .def_readwrite("trimFraction", &GoICP::trimFraction)
+        .def_readwrite("inLinerNum", &GoICP::inlierNum)
+        .def_readwrite("doTrim", &GoICP::doTrim)
+        .def_readwrite("pModel", &GoICP::pModel)
+        .def_readwrite("pData", &GoICP::pData)
+        ;
+
 }
