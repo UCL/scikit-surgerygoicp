@@ -22,7 +22,7 @@ jobs:
 
       - name: Install python module
         run: |
-          pip install pytest, numpy
+          pip install pytest numpy
           python setup.py install
 
       - name: Test python module
