@@ -1,0 +1,86 @@
+/*============================================================================
+#
+#  SKSURGERYGOICP: Python wrapping of GO ICP
+#
+#  Copyright (c) University College London (UCL). All rights reserved.
+#
+#  This software is distributed WITHOUT ANY WARRANTY; without even
+#  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+#  PURPOSE.
+#
+#  See LICENSE.txt in the top level directory for details.
+#
+#============================================================================*/
+
+/* 
+ * here is where system computed values get stored these values should only
+ * change when the target compile platform changes 
+ */
+
+/* what byte order */
+/* All compilers that support Mac OS X define either __BIG_ENDIAN__ or
+   __LITTLE_ENDIAN__ to match the endianness of the architecture being
+   compiled for. This is not necessarily the same as the architecture of
+   the machine doing the building. In order to support Universal Binaries on
+   Mac OS X, we prefer those defines to decide the endianness.
+   On other platform, we use the result of the TRY_RUN. */
+#if !defined(__APPLE__)
+  #cmakedefine CMAKE_WORDS_BIGENDIAN 
+  #ifdef CMAKE_WORDS_BIGENDIAN
+    #define SKSURGERYGOICP_WORDS_BIGENDIAN
+  #endif
+#elif defined(__BIG_ENDIAN__)
+  #define CMAKE_WORDS_BIGENDIAN
+  #define SKSURGERYGOICP_WORDS_BIGENDIAN
+#endif
+
+
+#if defined(__CYGWIN__)
+#ifndef WIN32
+#define WIN32 1
+#endif
+#ifndef _WIN32
+#define _WIN32 1
+#endif
+#endif
+
+/* what threading system are we using */
+#cmakedefine CMAKE_USE_PTHREADS
+#ifdef CMAKE_USE_PTHREADS
+#define SKSURGERYGOICP_USE_PTHREADS
+#endif
+
+#cmakedefine CMAKE_USE_SPROC
+#ifdef CMAKE_USE_SPROC
+#define SKSURGERYGOICP_USE_SPROC
+#endif
+
+#cmakedefine CMAKE_HP_PTHREADS
+#ifdef CMAKE_HP_PTHREADS
+#define SKSURGERYGOICP_HP_PTHREADS
+#endif
+
+#cmakedefine CMAKE_USE_WIN32_THREADS
+#ifdef CMAKE_USE_WIN32_THREADS
+#define SKSURGERYGOICP_USE_WIN32_THREADS
+#endif
+
+#cmakedefine SKSURGERYGOICP_BUILD_SHARED_LIBS
+#ifdef SKSURGERYGOICP_BUILD_SHARED_LIBS
+#define SKSURGERYGOICPDLL
+#else
+#define SKSURGERYGOICPSTATIC
+#endif
+
+#cmakedefine CMAKE_NO_STD_NAMESPACE
+#cmakedefine CMAKE_NO_ANSI_STREAM_HEADERS
+#cmakedefine CMAKE_NO_ANSI_STRING_STREAM
+#cmakedefine CMAKE_NO_ANSI_FOR_SCOPE
+
+#define SKSURGERYGOICP_VERSION_MAJOR @SKSURGERYGOICP_VERSION_MAJOR@
+#define SKSURGERYGOICP_VERSION_MINOR @SKSURGERYGOICP_VERSION_MINOR@
+#define SKSURGERYGOICP_VERSION_PATCH @SKSURGERYGOICP_VERSION_PATCH@
+#define SKSURGERYGOICP_VERSION_STRING "@SKSURGERYGOICP_VERSION_STRING@"
+
+/* Specific platform checks */
+#cmakedefine HAVE_MKSTEMPS

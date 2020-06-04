@@ -1,0 +1,7 @@
+Installation Instructions.
+--------------------------
+
+This is the @SKSURGERYGOICP_PACKAGE_NAME@ software for whatever, version @SKSURGERYGOICP_VERSION_STRING@.
+
+For all questions and queries please contact: @SKSURGERYGOICP_CONTACT@.
+
