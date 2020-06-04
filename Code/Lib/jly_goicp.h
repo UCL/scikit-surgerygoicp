@@ -34,10 +34,12 @@ using namespace std;
 #define PI 3.1415926536
 #define SQRT3 1.732050808
 
-typedef struct _POINT3D
+struct POINT3D
 {
 	float x, y, z;
-}POINT3D;
+	POINT3D(float _x, float _y, float _z);
+
+};
 
 typedef struct _ROTNODE
 {

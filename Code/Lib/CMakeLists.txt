@@ -15,6 +15,11 @@
 set(SKSURGERYGOICP_LIBRARY_NAME sksurgerygoicp)
 
 set(SKSURGERYGOICP_LIBRARY_SRCS
+	jly_goicp.cpp
+	jly_3ddt.cpp
+	matrix.cpp
+	ConfigMap.cpp
+	StringTokenizer.cpp
   sksgoicpBasicTypes.cpp
   sksgoicpMyFunctions.cpp
   sksgoicpException.cpp
