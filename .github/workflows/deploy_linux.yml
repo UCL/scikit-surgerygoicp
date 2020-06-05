@@ -1,0 +1,35 @@
+
+on: push
+
+env:
+  DO_PYTHON_BUILD: true
+  PS4: '+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+  REPO_DIR: .
+  BUILD_COMMIT: HEAD
+  BUILD_DEPENDS: numpy wheel
+  TEST_DEPENDS: numpy pytest
+  BDIST_PARAMS: ""
+  UNICODE_WIDTH: 32
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-ver: [3.6, 3.7, 3.8]
+        platform: [x86_64, i386]
+      
+      steps:
+        - uses: actions/checkout@latest@v2
+        - uses: textbook/git-checkout-submodule-action@2.0.0
+        - name: Run multibuild
+          run: |
+            source multibuild/common_utils.sh
+            source multibuild/travis_linux_steps.sh
+
+      # - name: Set up Python
+      #   uses: actions/setup-python@v1
+      #   with:
+      #     python-version: python-ver
+
