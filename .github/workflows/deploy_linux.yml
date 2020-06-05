@@ -34,6 +34,8 @@ jobs:
           python-version: ${{ matrix.python-ver }}
       - name: Setup/run multibuild
         run: |
+          python -c 'print(a)'
+          virtualenv
           source multibuild/common_utils.sh
           source multibuild/travis_linux_steps.sh
           source config.sh
