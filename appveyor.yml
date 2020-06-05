@@ -25,9 +25,9 @@ environment:
   # Set DO_PYTHON_BUILD to false, if you are only interested in the C++ part.
   DO_PYTHON_BUILD: true
   USER:
-    secure: WRnAYR0H298UyxfzGNLbfQ==
-
-    secure: IZxQFfeIvDW8Hg55FYZ+HQ===
+    secure: IZxQFfeIvDW8Hg55FYZ+HQ==
+  PASS:
+    secure: IZxQFfeIvDW8Hg55FYZ+HQ==
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       COMPILER: "Visual Studio 14 2015"
