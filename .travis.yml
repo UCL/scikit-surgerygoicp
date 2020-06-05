@@ -16,31 +16,10 @@
 #        and : https://github.com/matthew-brett/multibuild
 #        and : https://github.com/thompson318/ndicapi-wheels
 
-language: python
-# The Travis Python version is unrelated to the version we build and test
-# with.  This is set with the MB_PYTHON_VERSION variable.
-python: 3.6
+language: generic
 sudo: required
-dist: trusty
+dist: xenial
 services: docker
-
-# To Do: Where to put these?
-#        Most of these were deduced while testing various combinations of
-#        VTK, PCL, OpenCV etc. Your project  may be able to get away with a
-#        much smaller list, depending on your actual testing requirements.
-#
-#sudo apt-get update
-#sudo apt-get -yqq install build-essential
-#sudo apt-get -yqq install binutils-gold
-#sudo apt-get -yqq install freeglut3
-#sudo apt-get -yqq install freeglut3-dev
-#sudo apt-get -yqq install libglew-dev
-#sudo apt-get -yqq install libglew1.5-dev
-#sudo apt-get -yqq install libglm-dev
-#sudo apt-get -yqq install mesa-common-dev
-#sudo apt-get -yqq install mesa-utils-extra
-#sudo apt-get -yqq install libgl1-mesa-dev
-#sudo apt-get -yqq install libglapi-mesa
 
 env:
   global:
@@ -56,50 +35,19 @@ env:
 
 matrix:
   fast_finish: true
-  exclude:
-    # Exclude the default Python 3.6 build
-    - python: 3.6
   include:
-    # Builds for MacOS
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - BDIST_PARAMS="-- -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.7"
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.6
-        - BDIST_PARAMS="-- -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.7"
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.7
-        - BDIST_PARAMS="-- -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.7"
-   # Builds for Linux
-    - os: linux
+    - os: osx
+      language: generic
       env:
-        - MB_PYTHON_VERSION=2.7
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - PLAT=i686
+        - MB_PYTHON_VERSION=3.8
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
@@ -113,6 +61,13 @@ matrix:
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.7
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.8
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.8
         - PLAT=i686
 
 before_install:
