@@ -13,20 +13,25 @@ env:
 
 jobs:
   build:
+
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         python-ver: [3.6, 3.7, 3.8]
         platform: [x86_64, i386]
+
+    runs-on: ubuntu-latest
       
-      steps:
-        - uses: actions/checkout@latest@v2
-        - uses: textbook/git-checkout-submodule-action@2.0.0
-        - name: Run multibuild
-          run: |
-            source multibuild/common_utils.sh
-            source multibuild/travis_linux_steps.sh
+    env:
+      PLAT: ${{ matrix.platform }}
+      
+    steps:
+      - uses: actions/checkout@v2
+      - uses: textbook/git-checkout-submodule-action@2.0.0
+      - name: Run multibuild
+        run: |
+          source multibuild/common_utils.sh
+          source multibuild/travis_linux_steps.sh
 
       # - name: Set up Python
       #   uses: actions/setup-python@v1
