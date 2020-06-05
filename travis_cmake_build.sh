@@ -26,7 +26,7 @@ function cmake_build {
   cmake -DSKSURGERYGOICP_PYTHON_VERSION:STRING=${PYTHON_VERSION} -DBUILD_Python_PyBind=ON -DCMAKE_BUILD_TYPE:String=Release ${extra_flags} ..
   make -j 2
   cd SKSURGERYGOICP-build
-  ctest -S CTestContinuous.cmake -V
+  # ctest -S CTestContinuous.cmake -V
   cd ../../
   echo "Finished travis_cmake_build.sh"
 }
