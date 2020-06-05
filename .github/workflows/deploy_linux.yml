@@ -18,17 +18,21 @@ jobs:
       fail-fast: false
       matrix:
         python-ver: [3.6, 3.7, 3.8]
-        platform: [x86_64, i386]
+        platform: [x86_64, i686]
 
     runs-on: ubuntu-latest
       
     env:
       PLAT: ${{ matrix.platform }}
+      MB_PYTHON_VERSION: ${{ matrix.python-ver }}
       
     steps:
       - uses: actions/checkout@v2
       - uses: textbook/git-checkout-submodule-action@2.0.0
+        with:
+          python-version: ${{ matrix.python-ver }}
       - name: Setup/run multibuild
+
         run: |
           source multibuild/common_utils.sh
           source multibuild/travis_linux_steps.sh
