@@ -30,7 +30,7 @@ jobs:
           python-version: ${{ matrix.python-ver }}4
       - name: Build
         run: |
-        mkdir build
-        cd build
-        cmake -G "{{ matrix.compiler }}" -DBUILD_Pytohn_PyBind:BOOL:ON -DCMAKE_BUILD_TYPE:String=Release --config Release ..
-        cmake --build . --config Release
+          mkdir build
+          cd build
+          cmake -G "{{ matrix.compiler }}" -DBUILD_Pytohn_PyBind:BOOL:ON -DCMAKE_BUILD_TYPE:String=Release --config Release ..
+          cmake --build . --config Release
