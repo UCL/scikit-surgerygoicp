@@ -28,10 +28,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: textbook/git-checkout-submodule-action@2.0.0
-      - name: Run multibuild
+      - name: Setup/run multibuild
         run: |
           source multibuild/common_utils.sh
           source multibuild/travis_linux_steps.sh
+          DOCKER_IMAGE=quay.io/skvark/manylinux1_$PLAT
+          build_multilinux $PLAT "build_wheel $REPO_DIR"
+
+      - name: Build C++
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DBUILD_Python_PyBind=ON
+          make
 
       # - name: Set up Python
       #   uses: actions/setup-python@v1
