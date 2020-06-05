@@ -37,9 +37,9 @@ jobs:
           pip install virtualenv
           source multibuild/common_utils.sh
           source multibuild/travis_linux_steps.sh
-          source config.sh
           before_install
 
+          printenv | more
           DOCKER_IMAGE=quay.io/skvark/manylinux1_$PLAT
           build_multilinux $PLAT "build_wheel $REPO_DIR"
 
