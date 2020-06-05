@@ -35,6 +35,7 @@ jobs:
         run: |
           source multibuild/common_utils.sh
           source multibuild/travis_linux_steps.sh
+          source config.sh
           before_install
 
           DOCKER_IMAGE=quay.io/skvark/manylinux1_$PLAT

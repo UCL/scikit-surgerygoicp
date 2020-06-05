@@ -12,6 +12,11 @@
 #
 #============================================================================*/
 
+function before_install {
+    python --version # just to check
+    pip install --upgrade pip wheel
+}
+
 function pre_build {
   echo "Starting pre_build."
 
