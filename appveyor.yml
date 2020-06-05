@@ -25,7 +25,7 @@ environment:
   # Set DO_PYTHON_BUILD to false, if you are only interested in the C++ part.
   DO_PYTHON_BUILD: true
   USER:
-    secure: IZxQFfeIvDW8Hg55FYZ+HQ==
+    secure: WRnAYR0H298UyxfzGNLbfQ==
   PASS:
     secure: IZxQFfeIvDW8Hg55FYZ+HQ==
   matrix:
