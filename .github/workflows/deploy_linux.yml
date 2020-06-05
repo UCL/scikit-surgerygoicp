@@ -29,6 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: textbook/git-checkout-submodule-action@2.0.0
+      - uses: actions/setup-python@v1.1.1
         with:
           python-version: ${{ matrix.python-ver }}
       - name: Setup/run multibuild
