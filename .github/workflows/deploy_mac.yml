@@ -1,3 +1,4 @@
+name: Mac Deploy
 
 on: push
 
@@ -29,6 +30,8 @@ jobs:
       
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
       - uses: actions/setup-python@v1.1.1
         with:
           python-version: ${{ matrix.python-ver }}
