@@ -23,7 +23,7 @@ function cmake_build {
   if [ -n "$IS_OSX" ]; then
     extra_flags=" -DCMAKE_CXX_FLAGS=-stdlib=libc++ -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.7 "
   fi
-  cmake -DSKSURGERYGOICP_PYTHON_VERSION:STRING=${PYTHON_VERSION} -DBUILD_SUPERBUILD:BOOL=ON -DBUILD_TESTING:BOOL=ON -DBUILD_Boost:BOOL=ON -DBUILD_Python_Boost:BOOL=ON -DBUILD_Eigen:BOOL=ON -DBUILD_glog:BOOL=ON -DBUILD_gflags:BOOL=ON -DBUILD_VTK:BOOL=OFF -DBUILD_PCL:BOOL=ON -DBUILD_OpenCV:BOOL=ON -DCMAKE_BUILD_TYPE:String=Release ${extra_flags} ..
+  cmake -DSKSURGERYGOICP_PYTHON_VERSION:STRING=${PYTHON_VERSION} -DBUILD_Python_PyBind=ON -DCMAKE_BUILD_TYPE:String=Release ${extra_flags} ..
   make -j 2
   cd SKSURGERYGOICP-build
   ctest -S CTestContinuous.cmake -V

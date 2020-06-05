@@ -17,7 +17,6 @@
 #        and : https://github.com/thompson318/ndicapi-wheels
 
 language: generic
-sudo: required
 dist: xenial
 services: docker
 
