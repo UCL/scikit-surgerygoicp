@@ -10,13 +10,10 @@ jobs:
         include:
           - python-ver: 3.6
             COMPILER: Visual Studio 14 2015
-        include:
           - python-ver: 3.6
             COMPILER: Visual Studio 14 2015 Win64
-        include:
           - python-ver: 3.7
             COMPILER: Visual Studio 15 2017
-        include:
           - python-ver: 3.7
             COMPILER: Visual Studio 16 2017 Win64
     
