@@ -52,11 +52,13 @@ function pre_build {
 
   fi
 
+
   # Run the actual C++ build.
   source travis_cmake_build.sh
   cmake_build
 
   echo "Finished pre_build."
+
 }
 
 function build_wheel {
