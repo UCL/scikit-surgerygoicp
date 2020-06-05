@@ -10,7 +10,6 @@ Jiaolong Yang <yangjiaolong@gmail.com>
 #pragma once
 #include <math.h>
 #include <stdio.h>
-#include <malloc.h>
 #include <stdlib.h>
 #include <memory.h>
 
