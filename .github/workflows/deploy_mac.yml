@@ -37,6 +37,11 @@ jobs:
       - name: Run multibuild
         run: |
           pip install virtualenv
+          
+          WHEEL_SDIR=${WHEEL_SDIR:-wheelhouse}
+          MULTIBUILD_DIR=$(dirname "${BASH_SOURCE[0]}")
+          if [ ! -d "$PWD/$WHEEL_SDIR" ]; then mkdir $PWD/$WHEEL_SDIR; fi
+          
           source multibuild/common_utils.sh
           source multibuild/travis_osx_steps.sh
           before_install
