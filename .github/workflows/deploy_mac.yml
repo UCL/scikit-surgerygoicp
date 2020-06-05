@@ -50,9 +50,9 @@ jobs:
 
           install_run $PLAT
 
-      - name: Publish package if tagged release
-        if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
+      - name: deploy
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          pip install twine
+          pip install --upgrade pyOpenSSL
+          twine upload --repository pypi -u __token__ -p ${PYPI_API_TOKEN} --skip-existing wheelhouse/*
