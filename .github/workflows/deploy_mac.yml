@@ -39,7 +39,7 @@ jobs:
         run: |
           pip install virtualenv
           source multibuild/common_utils.sh
-          source multibuild/travis_linux_steps.sh
+          source multibuild/travis_osx_steps.sh
           before_install
 
           build_wheel $REPO_DIR $PLAT
