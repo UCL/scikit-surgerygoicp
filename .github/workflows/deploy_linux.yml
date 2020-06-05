@@ -34,7 +34,7 @@ jobs:
           python-version: ${{ matrix.python-ver }}
       - name: Setup/run multibuild
         run: |
-          virtualenv
+          pip install virtualenv
           source multibuild/common_utils.sh
           source multibuild/travis_linux_steps.sh
           source config.sh
