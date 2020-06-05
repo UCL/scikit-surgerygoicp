@@ -1,0 +1,45 @@
+
+on: push
+
+env:
+  DO_PYTHON_BUILD: true
+  PS4: '+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+  REPO_DIR: .
+  WHEEL_SDIR: dist
+  BUILD_COMMIT: HEAD
+  BUILD_DEPENDS: numpy wheel six
+  TEST_DEPENDS: numpy pytest
+  BDIST_PARAMS: ""
+  UNICODE_WIDTH: 32
+  PLAT: x86_64
+
+
+jobs:
+  build:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-ver: [3.6, 3.7, 3.8]
+
+    runs-on: macos-latest
+      
+    env:
+      MB_PYTHON_VERSION: ${{ matrix.python-ver }}
+      
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1.1.1
+        with:
+          python-version: ${{ matrix.python-ver }}
+      - name: Run multibuild
+        run: |
+          pip install virtualenv
+          source multibuild/common_utils.sh
+          source multibuild/travis_linux_steps.sh
+          before_install
+
+          build_wheel $REPO_DIR $PLAT
+
+          install_run $PLAT
+
