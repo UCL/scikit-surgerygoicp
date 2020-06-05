@@ -97,17 +97,17 @@ build_script:
     cmake --build . --config ${Env:CONFIGURATION}
     if ($LastExitCode -ne 0) {throw $LastExitCode}
 
-test_script:
-- ps: |
-    echo --------------------------------------------------------------------------------
-    cd ${Env:APPVEYOR_BUILD_FOLDER}
-    pwd
-    cd build
-    pwd
-    cd SKSURGERYGOICP-build
-    pwd
-    ctest -S CTestContinuous.cmake -V
-    if ($LastExitCode -ne 0) {throw $LastExitCode}
+# test_script:
+# - ps: |
+#     echo --------------------------------------------------------------------------------
+#     cd ${Env:APPVEYOR_BUILD_FOLDER}
+#     pwd
+#     cd build
+#     pwd
+#     cd SKSURGERYGOICP-build
+#     pwd
+#     ctest -S CTestContinuous.cmake -V
+#     if ($LastExitCode -ne 0) {throw $LastExitCode}
 
 after_test:
 - ps: |
