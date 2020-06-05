@@ -25,7 +25,7 @@ jobs:
           submodules: 'true'
       - uses: actions/setup-python@v1.1.1
         with:
-          python-version: ${{ matrix.python-ver }}4
+          python-version: ${{ matrix.python-ver }}
       - name: Build
         run: |
           mkdir build
