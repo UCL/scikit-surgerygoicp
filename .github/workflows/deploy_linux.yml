@@ -33,7 +33,7 @@ jobs:
       - uses: actions/setup-python@v1.1.1
         with:
           python-version: ${{ matrix.python-ver }}
-      - name: Setup/run multibuild
+      - name: Run multibuild
         run: |
           pip install virtualenv
           source multibuild/common_utils.sh
@@ -42,4 +42,6 @@ jobs:
 
           DOCKER_IMAGE=quay.io/skvark/manylinux1_$PLAT
           build_multilinux $PLAT "build_wheel $REPO_DIR"
+
+          install_run $PLAT
 
