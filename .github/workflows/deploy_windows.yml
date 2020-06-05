@@ -16,10 +16,10 @@ jobs:
             COMPILER: Visual Studio 14 2015 Win64
           - python-ver: 3.
             architecture: 'x86'
-            COMPILER: Visual Studio 15 2017
+            COMPILER: Visual Studio 16 2019
           - python-ver: 3.7
             architecture: 'x64'
-            COMPILER: Visual Studio 15 2017 Win64
+            COMPILER: Visual Studio 16 2019 Win64
     
     runs-on: windows-latest
 
