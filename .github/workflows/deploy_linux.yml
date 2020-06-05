@@ -1,5 +1,8 @@
 name: Linux Deploy 
-on: push
+on:
+  push:
+    tags:
+    - v*
 
 env:
   DO_PYTHON_BUILD: true
@@ -54,11 +57,8 @@ jobs:
           install_run $PLAT
 
       - name: deploy
-        if: startsWith(github.ref, 'refs/tags/')
         run: |
           pip install twine
           twine upload --repository pypi -u __token__ -p ${{ secrets.PYPI_API_TOKEN }} --skip-existing wheelhouse/*
 
-              
-          
 
