@@ -9,12 +9,16 @@ jobs:
       matrix:
         include:
           - python-ver: 3.6
+            architecture: 'x86'
             COMPILER: Visual Studio 14 2015
           - python-ver: 3.6
+            architecture: 'x64'
             COMPILER: Visual Studio 14 2015 Win64
-          - python-ver: 3.7
+          - python-ver: 3.
+            architecture: 'x86'
             COMPILER: Visual Studio 15 2017
           - python-ver: 3.7
+            architecture: 'x64'
             COMPILER: Visual Studio 15 2017 Win64
     
     runs-on: windows-latest
@@ -27,6 +31,8 @@ jobs:
       - uses: actions/setup-python@v1.1.1
         with:
           python-version: ${{ matrix.python-ver }}
+          architecture: ${{ matrix.architecture }}
+
       - name: Build
         run: |
           mkdir build
