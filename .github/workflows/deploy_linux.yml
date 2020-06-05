@@ -32,7 +32,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-ver }}
       - name: Setup/run multibuild
+<<<<<<< HEAD
 
+=======
+        with:
+          python-version: ${{ matrix.python-ver }}
+>>>>>>> 6d6cbb85244dd64e8c7df3a56749b3140cf84998
         run: |
           source multibuild/common_utils.sh
           source multibuild/travis_linux_steps.sh
