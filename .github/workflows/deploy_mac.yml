@@ -55,4 +55,4 @@ jobs:
         run: |
           pip install twine
           pip install --upgrade pyOpenSSL
-          twine upload --repository pypi -u __token__ -p ${PYPI_API_TOKEN} --skip-existing wheelhouse/*
+          twine upload --repository pypi -u __token__ -p "${PYPI_API_TOKEN}" --skip-existing wheelhouse/*
