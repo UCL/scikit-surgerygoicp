@@ -57,7 +57,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           pip install twine
-          twine upload --repository pypi -u __token__ -p ${PYPI_API_TOKEN} --skip-existing wheelhouse/*
+          twine upload --repository pypi -u ${PYPI_USER} -p ${PYPI_PASS} --skip-existing wheelhouse/*
 
               
           
