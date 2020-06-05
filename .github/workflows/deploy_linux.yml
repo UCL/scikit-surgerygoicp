@@ -6,7 +6,7 @@ env:
   PS4: '+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
   REPO_DIR: .
   BUILD_COMMIT: HEAD
-  BUILD_DEPENDS: numpy wheel
+  BUILD_DEPENDS: numpy wheel six
   TEST_DEPENDS: numpy pytest
   BDIST_PARAMS: ""
   UNICODE_WIDTH: 32
