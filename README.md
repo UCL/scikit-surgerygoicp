@@ -1,8 +1,8 @@
 scikit-surgerygoicp
 ------------------
 
-[![Build Status](https://travis-ci.com/MattClarkson/scikit-surgerygoicp.svg?branch=master)](https://travis-ci.com/MattClarkson/scikit-surgerygoicp)
-[![Build Status](https://ci.appveyor.com/api/projects/status/5pm89ej732c1ekf0/branch/master)](https://ci.appveyor.com/project/MattClarkson/cmakecatchtemplate)
+[![Build Status](https://travis-ci.com/MattClarkson/scikit-surgerygoicp.svg?branch=master)](https://travis-ci.org/github/UCL/scikit-surgerygoicp)
+[![Build Status](https://ci.appveyor.com/api/projects/status/5pm89ej732c1ekf0/branch/master)](https://ci.appveyor.com/project/tdowrick/scikit-surgerygoicp)
 
 
 Purpose
