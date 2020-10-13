@@ -31,12 +31,6 @@ environment:
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       COMPILER: "Visual Studio 14 2015"
-      MB_PYTHON: "C:/Python35"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      COMPILER: "Visual Studio 14 2015 Win64"
-      MB_PYTHON: "C:/Python35-x64"
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      COMPILER: "Visual Studio 14 2015"
       MB_PYTHON: "C:/Python36"
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       COMPILER: "Visual Studio 14 2015 Win64"
