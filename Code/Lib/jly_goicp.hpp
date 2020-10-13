@@ -205,7 +205,13 @@ GoICP::GoICP()
 	initNodeRot.w = 2*PI;
 	initNodeRot.l = 0;
 	initNodeRot.lb = 0;
+
+	initNodeTrans.x = -0.5;
+	initNodeTrans.y = -0.5;
+	initNodeTrans.z = -0.5;
+	initNodeTrans.w = 1.0;
 	initNodeTrans.lb = 0;
+
 	MSEThresh = 0.001;
 	trimFraction = 0.0;
 	doTrim = true;
