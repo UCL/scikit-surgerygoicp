@@ -3,8 +3,16 @@ import numpy as np;
 import time;
 import pytest
 
-def loadPointCloud(filename):
-    pcloud = np.loadtxt(filename, skiprows=1);
+def loadPointCloud(filename, n=-1):
+    pcloud = np.loadtxt(filename, skiprows=1)
+
+    if (n > 0):
+        num_points = pcloud.shape[0]
+        idxs = np.random.choice(range(num_points),
+                                n,
+                                replace=False)
+        pcloud= pcloud[idxs,:]
+
     plist = pcloud.tolist();
     p3dlist = [];
     for x,y,z in plist:
@@ -37,11 +45,12 @@ def test_goicp():
     b_points = [POINT3D(0.0, 0.0, 0.0), POINT3D(1.0, 0.5, 0.0), POINT3D(1.0, -0.5, 0.0)];
 
     Nm, a_points, np_a_points = loadPointCloud('./Testing/Data/model_bunny.txt');
-    Nd, b_points, np_b_points = loadPointCloud('./Testing/Data/data_bunny.txt');
+    Nd, b_points, np_b_points = loadPointCloud('./Testing/Data/data_bunny.txt', n=1000);
+
 
     goicp.loadModelAndData(Nm, a_points, Nd, b_points);
     #LESS DT Size = LESS TIME CONSUMPTION = HIGHER ERROR
-    goicp.setDTSizeAndFactor(300, 2.0);
+    goicp.setDTSizeAndFactor(200, 2.0);
     goicp.setInitNodeRot(rNode);
     goicp.setInitNodeTrans(tNode);
 
@@ -61,8 +70,12 @@ def test_goicp():
     transform[:3, :3] = optR;
     transform[:,3] = optT;
 
-    print(np_b_points.shape, np.ones((Nd, 1)).shape);
+    residual = goicp.optError
+    print("Calculated transform")
+    print(transform)
 
+    print("Error")
+    print(residual)
     #Now transform the data mesh to fit the model mesh
     transform_model_points = (transform.dot(np.hstack((np_b_points, np.ones((Nd, 1)))).T)).T;
     transform_model_points = transform_model_points[:,:3];
@@ -71,12 +84,8 @@ def test_goicp():
 
     np.savetxt('./Testing/Data/data_bunny_transformed.ply', transform_model_points, header = PLY_FILE_HEADER, comments='');
 
-    expected_transform = np.loadtxt('./Testing/Data/expected_transform.txt')
+    assert residual < 0.5
 
-    np.testing.assert_allclose(expected_transform, transform, atol =1e-9, rtol=1e25)
-    # print(optR);
-    # print(optT);
-    # print(transform);
 
 if __name__ == "__main__":
     test_goicp()
