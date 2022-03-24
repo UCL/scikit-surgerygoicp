@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: 'true'
-      - uses: actions/setup-python@v1.1.1
+      - uses: actions/setup-python@v2.2.1
         with:
           python-version: ${{ matrix.python-ver }}
       - name: Run multibuild
@@ -56,9 +56,9 @@ jobs:
 
           install_run $PLAT
 
-      - name: deploy
-        run: |
-          pip install twine
-          twine upload --repository pypi -u __token__ -p ${{ secrets.PYPI_API_TOKEN }} --skip-existing wheelhouse/*
+      # - name: deploy
+      #   run: |
+      #     pip install twine
+      #     twine upload --repository pypi -u __token__ -p ${{ secrets.PYPI_API_TOKEN }} --skip-existing wheelhouse/*
 
 

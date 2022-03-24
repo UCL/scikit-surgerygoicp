@@ -61,8 +61,6 @@ PYBIND11_MODULE(sksurgerygoicppython, m) {
         .def("BuildDT", &GoICP::BuildDT)
         .def("Register", &GoICP::Register)
         .def("loadModelAndData", &GoICP::loadModelAndData)
-        .def("setInitNodeRot", &GoICP::setInitNodeRot)
-        .def("setInitNodeTrans", &GoICP::setInitNodeTrans)
         .def("optimalTranslation", &GoICP::optimalTranslation)
         .def("optimalRotation", &GoICP::optimalRotation)
         .def("setDTSizeAndFactor", &GoICP::setDTSizeAndFactor)
